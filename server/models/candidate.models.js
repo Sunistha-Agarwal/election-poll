@@ -18,7 +18,11 @@ const candidateSchema = new mongoose.Schema({
     },
     slogan: {
         type: String
+    },
+    votes: {
+        type: Number
     }
 },{timestamps: true})
 
-export const Candidate = mongoose.model('Candidate', candidateSchema)
+const Candidate = mongoose.model('Candidate', candidateSchema)
+export default Candidate
