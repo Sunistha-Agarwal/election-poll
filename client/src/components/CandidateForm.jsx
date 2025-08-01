@@ -1,6 +1,9 @@
 import React from "react";
 
 const CandidateForm = () => {
+
+  
+
   return (
    <div
   className="text-[#3a001e] min-h-screen pt-28 px-6 pb-12 bg-cover bg-center bg-no-repeat"

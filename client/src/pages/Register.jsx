@@ -1,25 +1,36 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useSignup } from '../hooks/useSignUp';
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
+  const {signup, error, isLoading} = useSignup()
+
   const [formData, setFormData] = useState({
-    fullName: '',
+    name: '',
     email: '',
     password: '',
-    userType: 'voter'
+    role: 'voter'
   });
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    console.log(e.target)
+    const name= e.target.name;
+    const value=e.target.value;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async(e) => {
+    // e.preventDefault();
     console.log('Registration data:', formData);
+    await signup(formData)
+    if (!error) {
+    navigate("/dashboard"); // or your desired route
+  }
   };
 
   return (
@@ -46,13 +57,13 @@ function Register() {
               <input
                 type="text"
                 id="fullName"
-                name="fullName"
-                value={formData.fullName}
+                name="name"
+                value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Enter your full name"
                 autoComplete="off"
                 className="w-full px-3 py-2 border border-[#ff6c37] rounded-lg text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
-                required
+                // required={true}
               />
             </div>
 
@@ -69,7 +80,7 @@ function Register() {
                 placeholder="Enter your email"
                 autoComplete="off"
                 className="w-full px-3 py-2 border border-[#ff6c37] rounded-lg text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
-                required
+                required={true}
               />
             </div>
 
@@ -86,26 +97,26 @@ function Register() {
                 placeholder="Create a strong password"
                 autoComplete="off"
                 className="w-full px-3 py-2 border border-[#ff6c37] rounded-lg text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
-                required
+                required={true}
               />
             </div>
 
             <div>
-              <label htmlFor="userType" className="block text-sm font-medium text-[#301e1c] mb-1">
+              <label htmlFor="role" className="block text-sm font-medium text-[#301e1c] mb-1">
                 I am registering as
               </label>
               <div className="relative">
                 <select
-                  id="userType"
-                  name="userType"
-                  value={formData.userType}
+                  id="role"
+                  name="role"
+                  value={formData.role}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-[#ff6c37] rounded-lg text-gray-700 bg-white cursor-pointer appearance-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200"
-                  required
+                  required={true}
                 >
-                  <option value="voter">Voter</option>
-                  <option value="register">Register</option>
-                  <option value="admin">Admin</option>
+                  <option value="Voter">Voter</option>
+                  <option value="Candidate">Candidate</option>
+                  <option value="Admin">Admin</option>
                 </select>
                 <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
               </div>
@@ -113,10 +124,18 @@ function Register() {
 
             <button
               type="submit"
+              onClick={handleSubmit}
               className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-2.5 px-4 rounded-full hover:from-orange-600 hover:to-orange-700 transform hover:scale-[1.02] transition duration-200 shadow-lg hover:shadow-xl"
+              disabled={isLoading}
             >
               CREATE ACCOUNT
             </button>
+
+             {error && (
+            <div className="bg-red-200 border border-red-700 rounded-lg p-1 m-2">
+              <p className="text-red-700">{error}</p>
+            </div>
+          )}
           </form>
 
           <div className="mt-5 text-center">
