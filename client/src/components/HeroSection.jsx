@@ -1,4 +1,6 @@
 import { Button } from "@components/ui/button";
+import { NavLink } from 'react-router-dom';
+
 const HeroSection = () => {
   return (
     <section
@@ -18,12 +20,14 @@ const HeroSection = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button
+          <NavLink to='/castyourvote'>
+            <Button
             size="lg"
             className="bg-primary hover:bg-secondary text-primary-foreground px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
             CAST YOUR VOTE NOW
           </Button>
+          </NavLink>
           <Button
             size="lg"
             variant="outline"

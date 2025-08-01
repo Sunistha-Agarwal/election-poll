@@ -5,6 +5,10 @@ const candidateSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    name: {
+        type:String,
+        required:true
+    },
     photourl: {
         type: String
     },
@@ -17,7 +21,8 @@ const candidateSchema = new mongoose.Schema({
         required: true
     },
     slogan: {
-        type: String
+        type: String,
+        required:true
     },
     votes: {
         type: Number
