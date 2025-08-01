@@ -5,9 +5,9 @@ import connectDB from "./db/db.config.js";
 import userRoutes from './routes/user.routes.js'
 import voteRoutes from './routes/vote.routes.js'
 import requireAuth from "./middlewares/auth.middlewares.js";
-import requireVoter from './middlewares/voter.middleware.js'
+import {requireVoter} from './middlewares/roles.middleware.js'
 import candidateRoutes from './routes/candidate.routes.js'
-import notRequireVoter from './middlewares/candidate.middleware.js'
+import cors from 'cors'
 
 config()
 connectDB()
@@ -15,11 +15,13 @@ connectDB()
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors({origin: 'http://localhost:5173'}))
+
 app.use(express.json())
 
 app.use('/api/user',userRoutes)
 app.use('/api/voter',requireAuth, requireVoter,voteRoutes)
-app.use('/api/candidate', requireAuth, notRequireVoter, candidateRoutes)
+app.use('/api/candidate', requireAuth, candidateRoutes)
 
 // 404 handler
 app.use((req, res, next) => {

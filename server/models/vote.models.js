@@ -14,7 +14,6 @@ const voteSchema = new mongoose.Schema({
     },
     deviceId: {
         type: String,
-        required: true
     }
 },{timestamps: true})
 

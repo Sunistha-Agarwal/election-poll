@@ -13,10 +13,10 @@ const castVote = async(req,res,next) => {
             }
 
             // Check if deviceId is unique
-            const deviceUsed = await Vote.findOne({ deviceId });
-            if (deviceUsed) {
-                return res.status(400).json({ message: 'Device has already been used to vote.' });
-            }
+            // const deviceUsed = await Vote.findOne({ deviceId });
+            // if (deviceUsed) {
+            //     return res.status(400).json({ message: 'Device has already been used to vote.' });
+            // }
 
             //check if candidate is valid or not
             const candidate = await Candidate.findById(votedTo);

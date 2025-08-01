@@ -1,9 +1,11 @@
 import express from 'express';
-import { createCandidate } from '../controllers/candidate.controllers.js';
+import { createCandidate,getAllCandidates, deleteCandidate } from '../controllers/candidate.controllers.js';
+import { requireAdmin, requireCandidateOrAdmin, requireAdminOrVoter,requireVoter } from '../middlewares/roles.middleware.js';
 
 const router = express.Router();
 
-// POST /fillcandidateform
-router.post('/fillcandidateform', createCandidate);
+router.post('/candidate', requireCandidateOrAdmin, createCandidate);
+router.get('/candidate', requireAdminOrVoter, getAllCandidates);
+router.delete('/candidate/:id', requireAdmin, deleteCandidate);
 
 export default router;
